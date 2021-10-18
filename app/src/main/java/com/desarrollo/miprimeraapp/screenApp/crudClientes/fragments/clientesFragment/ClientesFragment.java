@@ -10,6 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.desarrollo.miprimeraapp.R;
+import com.desarrollo.miprimeraapp.models.Clientes;
+import com.desarrollo.miprimeraapp.utilerias.Urls;
 
 public class ClientesFragment extends Fragment {
     @Nullable
