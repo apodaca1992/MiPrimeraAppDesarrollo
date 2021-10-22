@@ -1,8 +1,12 @@
 package com.desarrollo.miprimeraapp.screenApp.crudClientes.fragments.clientesFragment;
 
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -19,6 +23,7 @@ import com.desarrollo.miprimeraapp.R;
 import com.desarrollo.miprimeraapp.adapter.ClientesAdapter;
 import com.desarrollo.miprimeraapp.databinding.ClientesFragmentBinding;
 import com.desarrollo.miprimeraapp.models.Clientes;
+import com.desarrollo.miprimeraapp.screenApp.crudClientes.activities.altaCliente.AltaClienteActivity;
 import com.desarrollo.miprimeraapp.utilerias.Urls;
 
 import java.util.ArrayList;
@@ -42,6 +47,13 @@ public class ClientesFragment extends Fragment {
     }
 
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        setHasOptionsMenu(true);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         binding.clientesProgress.setVisibility(View.VISIBLE);
@@ -52,6 +64,20 @@ public class ClientesFragment extends Fragment {
                 setUpRecyclerView(clientesList);
             }
         });
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main_clientes, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_alta_cliente){
+            Intent addCliente = new Intent(getContext(), AltaClienteActivity.class);
+            startActivity(addCliente);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void initUI(){

@@ -1,8 +1,19 @@
 <resources>
     <string name="app_name">MiPrimeraApp</string>
 
-    <string name="strParametroIdentificador">identificador</string>
+    <string name="strParametroNombres">Nombres</string>
+    <string name="strParametroApellidos">Apellidos</string>
+    <string name="strParametroDireccion">Dirección</string>
+    <string name="strParametroCiudad">Ciudad</string>
 
+    <string name="strParametroIdentificador">identificador</string>
     <string name="strControl">control</string>
     <string name="strControlListado">clientes-listado</string>
+    <string name="strControlAlta">clientes-alta</string>
+
+    <string name="strParametroWSClienteId">id_cliente</string>
+    <string name="strParametroWSNombre">nombre</string>
+    <string name="strParametroWSApellido">apellido</string>
+    <string name="strParametroWSDireccion">direccion</string>
+    <string name="strParametroWSCiudad">ciudad</string>
 </resources>

@@ -20,6 +20,9 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".screenApp.crudClientes.activities.altaCliente.AltaClienteActivity"
+            android:label="Agregar Cliente"/>
+
     </application>
 
 </manifest>

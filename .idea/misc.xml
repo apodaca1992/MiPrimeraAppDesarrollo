@@ -3,9 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/adrian/AndroidStudioProjects/CursoAndroidBasico/curso/app/src/main/res/drawable/ic_baseline_person_add_24.xml" value="0.18935185185185185" />
         <entry key="..\:/Users/adrian/AndroidStudioProjects/CursoAndroidBasico/curso/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Users/adrian/AndroidStudioProjects/CursoAndroidBasico/curso/app/src/main/res/layout/alta_cliente_activity.xml" value="0.25" />
         <entry key="..\:/Users/adrian/AndroidStudioProjects/CursoAndroidBasico/curso/app/src/main/res/layout/clientes_fragment.xml" value="0.25" />
         <entry key="..\:/Users/adrian/AndroidStudioProjects/CursoAndroidBasico/curso/app/src/main/res/layout/item_listado_clientes.xml" value="0.175" />
+        <entry key="..\:/Users/adrian/AndroidStudioProjects/CursoAndroidBasico/curso/app/src/main/res/menu/menu_main_clientes.xml" value="0.22" />
       </map>
     </option>
   </component>
