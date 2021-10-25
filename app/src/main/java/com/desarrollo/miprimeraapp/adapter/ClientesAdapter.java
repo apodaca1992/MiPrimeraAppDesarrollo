@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -27,6 +28,10 @@ public class ClientesAdapter extends RecyclerView.Adapter<ClientesAdapter.Client
     public ClientesAdapter(Context context, ArrayList<Clientes> list){
         this.context = context;
         this.clientesList = list;
+    }
+
+    public void setItemClickListener(onItemClickListener prListener){
+        this.listener = prListener;
     }
 
     @NonNull
@@ -53,6 +58,16 @@ public class ClientesAdapter extends RecyclerView.Adapter<ClientesAdapter.Client
         public ClienteViewHolder(View itemView, final ClientesAdapter.onItemClickListener listener){
             super(itemView);
             txtClienteName = itemView.findViewById(R.id.cliente_name);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION){
+                        listener.onItemClick(clientesList.get(position), v);
+                    }
+                }
+            });
         }
 
     }

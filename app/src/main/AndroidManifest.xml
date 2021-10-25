@@ -22,6 +22,12 @@
 
         <activity android:name=".screenApp.crudClientes.activities.altaCliente.AltaClienteActivity"
             android:label="Agregar Cliente"/>
+        
+        <activity android:name=".screenApp.crudClientes.activities.modificarCliente.ModificarClienteActivity"
+            android:label="Modificar Cliente"/>
+        
+        
+        
 
     </application>
 

@@ -1,5 +1,6 @@
 package com.desarrollo.miprimeraapp.screenApp.crudClientes.fragments.clientesFragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -9,9 +10,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -24,6 +27,7 @@ import com.desarrollo.miprimeraapp.adapter.ClientesAdapter;
 import com.desarrollo.miprimeraapp.databinding.ClientesFragmentBinding;
 import com.desarrollo.miprimeraapp.models.Clientes;
 import com.desarrollo.miprimeraapp.screenApp.crudClientes.activities.altaCliente.AltaClienteActivity;
+import com.desarrollo.miprimeraapp.screenApp.crudClientes.activities.modificarCliente.ModificarClienteActivity;
 import com.desarrollo.miprimeraapp.utilerias.Urls;
 
 import java.util.ArrayList;
@@ -96,5 +100,36 @@ public class ClientesFragment extends Fragment {
     private void setUpRecyclerView(final List<Clientes> oClientes){
         adapter = new ClientesAdapter(getContext(), (ArrayList<Clientes>) oClientes);
         binding.rcvClientes.setAdapter(adapter);
+        adapter.setItemClickListener((cliente, view) -> {
+            showPopup(cliente, view);
+        });
+    }
+
+    @SuppressLint("RestrictedApi")
+    public void showPopup(Clientes cliente, View v){
+        PopupMenu popup = new PopupMenu(requireContext(), v);
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.action_modificar:
+                        Intent intent = new Intent(getContext(), ModificarClienteActivity.class);
+                        intent.putExtra("idCliente", cliente.getId());
+                        startActivity(intent);
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
+
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.menu_opciones_clientes, popup.getMenu());
+        Menu menu = popup.getMenu();
+        if (menu instanceof MenuBuilder){
+            MenuBuilder menuBuilder = (MenuBuilder) menu;
+            menuBuilder.setOptionalIconsVisible(true);
+        }
+        popup.show();
     }
 }

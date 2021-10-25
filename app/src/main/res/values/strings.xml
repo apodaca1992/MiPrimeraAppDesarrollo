@@ -10,6 +10,9 @@
     <string name="strControl">control</string>
     <string name="strControlListado">clientes-listado</string>
     <string name="strControlAlta">clientes-alta</string>
+    <string name="strControlObtener">clientes-obtener</string>
+    <string name="strControlEliminar">clientes-eliminar</string>
+    <string name="strControlUpdate">clientes-update</string>
 
     <string name="strParametroWSClienteId">id_cliente</string>
     <string name="strParametroWSNombre">nombre</string>
