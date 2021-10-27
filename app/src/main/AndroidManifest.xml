@@ -25,9 +25,12 @@
         
         <activity android:name=".screenApp.crudClientes.activities.modificarCliente.ModificarClienteActivity"
             android:label="Modificar Cliente"/>
-        
-        
-        
+
+        <activity android:name=".screenApp.crudClientes.activities.eliminarCliente.EliminarClienteActivity"
+            android:label="Eliminar Cliente"/>
+
+        <activity android:name=".screenApp.crudClientes.activities.detalleCliente.DetalleClienteActivity"
+            android:label="Detalle Cliente"/>
 
     </application>
 

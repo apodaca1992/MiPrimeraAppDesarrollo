@@ -31,7 +31,7 @@
             android:padding="5dp">
 
             <ProgressBar
-                android:id="@+id/cliente_modificar_progress"
+                android:id="@+id/cliente_detalle_progress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="visible"
@@ -99,16 +99,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txtCiudad"
                 android:inputType="text" />
-
-
-            <Button
-                android:id="@+id/btnModificar"
-                android:layout_width="350dp"
-                android:layout_height="65dp"
-                android:layout_below="@id/editCiudad"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="22dp"
-                android:text="Modificar" />
 
         </RelativeLayout>
 

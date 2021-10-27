@@ -27,6 +27,8 @@ import com.desarrollo.miprimeraapp.adapter.ClientesAdapter;
 import com.desarrollo.miprimeraapp.databinding.ClientesFragmentBinding;
 import com.desarrollo.miprimeraapp.models.Clientes;
 import com.desarrollo.miprimeraapp.screenApp.crudClientes.activities.altaCliente.AltaClienteActivity;
+import com.desarrollo.miprimeraapp.screenApp.crudClientes.activities.detalleCliente.DetalleClienteActivity;
+import com.desarrollo.miprimeraapp.screenApp.crudClientes.activities.eliminarCliente.EliminarClienteActivity;
 import com.desarrollo.miprimeraapp.screenApp.crudClientes.activities.modificarCliente.ModificarClienteActivity;
 import com.desarrollo.miprimeraapp.utilerias.Urls;
 
@@ -114,6 +116,16 @@ public class ClientesFragment extends Fragment {
                 switch (item.getItemId()){
                     case R.id.action_modificar:
                         Intent intent = new Intent(getContext(), ModificarClienteActivity.class);
+                        intent.putExtra("idCliente", cliente.getId());
+                        startActivity(intent);
+                        return true;
+                    case R.id.action_eliminar:
+                        intent = new Intent(getContext(), EliminarClienteActivity.class);
+                        intent.putExtra("idCliente", cliente.getId());
+                        startActivity(intent);
+                        return true;
+                    case R.id.action_ver_detalle:
+                        intent = new Intent(getContext(), DetalleClienteActivity.class);
                         intent.putExtra("idCliente", cliente.getId());
                         startActivity(intent);
                         return true;

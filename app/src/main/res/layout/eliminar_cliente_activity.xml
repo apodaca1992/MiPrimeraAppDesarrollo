@@ -31,7 +31,7 @@
             android:padding="5dp">
 
             <ProgressBar
-                android:id="@+id/cliente_modificar_progress"
+                android:id="@+id/cliente_eliminar_progress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="visible"
@@ -102,13 +102,13 @@
 
 
             <Button
-                android:id="@+id/btnModificar"
+                android:id="@+id/btnEliminar"
                 android:layout_width="350dp"
                 android:layout_height="65dp"
                 android:layout_below="@id/editCiudad"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="22dp"
-                android:text="Modificar" />
+                android:text="Eliminar" />
 
         </RelativeLayout>
 
