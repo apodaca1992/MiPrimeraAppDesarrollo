@@ -10,6 +10,11 @@ public class Clientes {
 
     //constructores
     public Clientes(){
+        this.id = 0L;
+        this.nombres = "";
+        this.apellidos = "";
+        this.direccion = "";
+        this.ciudad = "";
     }
 
     public Clientes(Long id){

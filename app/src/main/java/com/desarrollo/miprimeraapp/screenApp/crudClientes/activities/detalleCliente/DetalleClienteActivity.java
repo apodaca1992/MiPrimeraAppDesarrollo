@@ -2,7 +2,6 @@ package com.desarrollo.miprimeraapp.screenApp.crudClientes.activities.detalleCli
 
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -13,9 +12,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.desarrollo.miprimeraapp.R;
 import com.desarrollo.miprimeraapp.databinding.DetalleClienteActivityBinding;
+import com.desarrollo.miprimeraapp.utilerias.ViewModelFactory;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,7 +33,8 @@ public class DetalleClienteActivity extends AppCompatActivity {
 
         binding = DataBindingUtil.setContentView(this, R.layout.detalle_cliente_activity);
 
-        oDetalleClienteViewModel = new DetalleClienteViewModel(getApplicationContext());
+        ViewModelFactory clientesViewModelFactory = new ViewModelFactory(getApplicationContext());
+        oDetalleClienteViewModel = new ViewModelProvider(this, clientesViewModelFactory).get(DetalleClienteViewModel.class);
 
         initUI();
 
@@ -40,7 +42,7 @@ public class DetalleClienteActivity extends AppCompatActivity {
         if (extras != null){
             long idCliente = extras.getLong("idCliente");
 
-            oDetalleClienteViewModel.detalleCliente(idCliente, getApplicationContext()).observe(this, new Observer<JSONObject>() {
+            oDetalleClienteViewModel.getCliente().observe(this, new Observer<JSONObject>() {
                 @Override
                 public void onChanged(JSONObject result) {
 
@@ -51,10 +53,10 @@ public class DetalleClienteActivity extends AppCompatActivity {
                         if (result.getJSONObject("meta").getBoolean("isValid")){
                             JSONObject clienteWS = result.getJSONObject("data").getJSONObject("cliente");
 
-                            binding.editNombre.setText(clienteWS.getString(getResources().getString(R.string.strParametroWSNombre)));
-                            binding.editApellidos.setText(clienteWS.getString(getResources().getString(R.string.strParametroWSApellido)));
-                            binding.editDireccion.setText(clienteWS.getString(getResources().getString(R.string.strParametroWSDireccion)));
-                            binding.editCiudad.setText(clienteWS.getString(getResources().getString(R.string.strParametroWSCiudad)));
+                            binding.editNombre.getEditText().setText(clienteWS.getString(getResources().getString(R.string.strParametroWSNombre)));
+                            binding.editApellidos.getEditText().setText(clienteWS.getString(getResources().getString(R.string.strParametroWSApellido)));
+                            binding.editDireccion.getEditText().setText(clienteWS.getString(getResources().getString(R.string.strParametroWSDireccion)));
+                            binding.editCiudad.getEditText().setText(clienteWS.getString(getResources().getString(R.string.strParametroWSCiudad)));
                         }else{
                             Toast.makeText(getApplicationContext(), result.getJSONObject("meta").getString("message"), Toast.LENGTH_SHORT).show();
                         }
@@ -64,6 +66,8 @@ public class DetalleClienteActivity extends AppCompatActivity {
 
                 }
             });
+
+            oDetalleClienteViewModel.obtenerCliente(idCliente, getApplicationContext());
 
         }
 

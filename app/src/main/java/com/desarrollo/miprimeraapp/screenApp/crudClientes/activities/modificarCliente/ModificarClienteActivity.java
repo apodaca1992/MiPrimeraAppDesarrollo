@@ -14,10 +14,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.desarrollo.miprimeraapp.R;
 import com.desarrollo.miprimeraapp.databinding.ModificarClienteActivityBinding;
 import com.desarrollo.miprimeraapp.models.Clientes;
+import com.desarrollo.miprimeraapp.screenApp.crudClientes.activities.detalleCliente.DetalleClienteViewModel;
+import com.desarrollo.miprimeraapp.utilerias.ViewModelFactory;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,7 +39,8 @@ public class ModificarClienteActivity extends AppCompatActivity {
 
         binding = DataBindingUtil.setContentView(this, R.layout.modificar_cliente_activity);
 
-        oModificarClienteViewModel = new ModificarClienteViewModel(getApplicationContext());
+        ViewModelFactory clientesViewModelFactory = new ViewModelFactory(getApplicationContext());
+        oModificarClienteViewModel = new ViewModelProvider(this, clientesViewModelFactory).get(ModificarClienteViewModel.class);
 
         initUI();
 
@@ -51,7 +55,7 @@ public class ModificarClienteActivity extends AppCompatActivity {
         if (extras != null){
             idCliente = extras.getLong("idCliente");
 
-            oModificarClienteViewModel.detalleCliente(idCliente, getApplicationContext()).observe(this, new Observer<JSONObject>() {
+            oModificarClienteViewModel.getResultDetalle().observe(this, new Observer<JSONObject>() {
                 @Override
                 public void onChanged(JSONObject result) {
 
@@ -62,10 +66,10 @@ public class ModificarClienteActivity extends AppCompatActivity {
                         if (result.getJSONObject("meta").getBoolean("isValid")){
                             JSONObject clienteWS = result.getJSONObject("data").getJSONObject("cliente");
 
-                            binding.editNombre.setText(clienteWS.getString(getResources().getString(R.string.strParametroWSNombre)));
-                            binding.editApellidos.setText(clienteWS.getString(getResources().getString(R.string.strParametroWSApellido)));
-                            binding.editDireccion.setText(clienteWS.getString(getResources().getString(R.string.strParametroWSDireccion)));
-                            binding.editCiudad.setText(clienteWS.getString(getResources().getString(R.string.strParametroWSCiudad)));
+                            binding.editNombre.getEditText().setText(clienteWS.getString(getResources().getString(R.string.strParametroWSNombre)));
+                            binding.editApellidos.getEditText().setText(clienteWS.getString(getResources().getString(R.string.strParametroWSApellido)));
+                            binding.editDireccion.getEditText().setText(clienteWS.getString(getResources().getString(R.string.strParametroWSDireccion)));
+                            binding.editCiudad.getEditText().setText(clienteWS.getString(getResources().getString(R.string.strParametroWSCiudad)));
                             activarControles();
 
                         }else{
@@ -78,20 +82,20 @@ public class ModificarClienteActivity extends AppCompatActivity {
                 }
             });
 
-
+            oModificarClienteViewModel.detalleCliente(idCliente, getApplicationContext());
         }
 
     }
 
     public void updateCliente(){
 
-        if (binding.editNombre.getText().toString().trim().equals("")){
+        if (binding.editNombre.getEditText().getText().toString().trim().equals("")){
             binding.editNombre.setError("Nombre es obligatorio.");
             binding.editNombre.setHint("Ingrese el nombre del cliente.");
             return;
         }
 
-        if (binding.editApellidos.getText().toString().trim().equals("")){
+        if (binding.editApellidos.getEditText().getText().toString().trim().equals("")){
             binding.editApellidos.setError("Apellidos es obligatorio.");
             binding.editApellidos.setHint("Ingrese los apellidos del cliente.");
             return;
@@ -99,14 +103,14 @@ public class ModificarClienteActivity extends AppCompatActivity {
 
         Clientes oCliente = new Clientes();
         oCliente.setId(idCliente);
-        oCliente.setNombres(binding.editNombre.getText().toString());
-        oCliente.setApellidos(binding.editApellidos.getText().toString());
-        oCliente.setDireccion(binding.editDireccion.getText().toString());
-        oCliente.setCiudad(binding.editCiudad.getText().toString());
+        oCliente.setNombres(binding.editNombre.getEditText().getText().toString());
+        oCliente.setApellidos(binding.editApellidos.getEditText().getText().toString());
+        oCliente.setDireccion(binding.editDireccion.getEditText().getText().toString());
+        oCliente.setCiudad(binding.editCiudad.getEditText().getText().toString());
 
         binding.clienteModificarProgress.setVisibility(View.VISIBLE);
 
-        oModificarClienteViewModel.modificarCliente(oCliente, getApplicationContext()).observe(this, new Observer<JSONObject>() {
+        oModificarClienteViewModel.getResultModificar().observe(this, new Observer<JSONObject>() {
             @Override
             public void onChanged(JSONObject result) {
 
@@ -115,15 +119,8 @@ public class ModificarClienteActivity extends AppCompatActivity {
                     assert result != null;
 
                     if (result.getJSONObject("meta").getBoolean("isValid")){
-                        AlertDialog alertDialog = new AlertDialog.Builder(ModificarClienteActivity.this).create();
-                        alertDialog.setTitle("AVISO");
-                        alertDialog.setMessage("Registro actualizado correctamente");
-                        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", ((dialog, which) -> {
-                            dialog.dismiss();
-                        }));
-
-                        alertDialog.show();
-
+                        Toast.makeText(getApplicationContext(), "Registro actualizado correctamente", Toast.LENGTH_SHORT).show();
+                        onBackPressed();
                     }else{
                         Toast.makeText(getApplicationContext(), result.getJSONObject("meta").getString("message"), Toast.LENGTH_LONG).show();
                     }
@@ -134,7 +131,7 @@ public class ModificarClienteActivity extends AppCompatActivity {
             }
         });
 
-
+        oModificarClienteViewModel.modificarCliente(oCliente, getApplicationContext());
     }
 
     private void initUI(){

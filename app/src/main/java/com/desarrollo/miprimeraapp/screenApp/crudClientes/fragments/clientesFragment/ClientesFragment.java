@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -31,6 +32,7 @@ import com.desarrollo.miprimeraapp.screenApp.crudClientes.activities.detalleClie
 import com.desarrollo.miprimeraapp.screenApp.crudClientes.activities.eliminarCliente.EliminarClienteActivity;
 import com.desarrollo.miprimeraapp.screenApp.crudClientes.activities.modificarCliente.ModificarClienteActivity;
 import com.desarrollo.miprimeraapp.utilerias.Urls;
+import com.desarrollo.miprimeraapp.utilerias.ViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +49,8 @@ public class ClientesFragment extends Fragment {
 
         initUI();
 
-        clientesViewModel = new ClientesViewModel(getActivity());
+        ViewModelFactory clientesViewModelFactory = new ViewModelFactory(getContext());
+        clientesViewModel = new ViewModelProvider(this, clientesViewModelFactory).get(ClientesViewModel.class);
 
         return binding.getRoot();
     }
@@ -63,13 +66,14 @@ public class ClientesFragment extends Fragment {
     public void onResume() {
         super.onResume();
         binding.clientesProgress.setVisibility(View.VISIBLE);
-        clientesViewModel.getData(getActivity()).observe(getViewLifecycleOwner(), new Observer<List<Clientes>>() {
+        clientesViewModel.getLstClientes().observe(getViewLifecycleOwner(), new Observer<List<Clientes>>() {
             @Override
             public void onChanged(List<Clientes> clientesList) {
                 binding.clientesProgress.setVisibility(View.GONE);
                 setUpRecyclerView(clientesList);
             }
         });
+        clientesViewModel.getData(getContext());
     }
 
     @Override

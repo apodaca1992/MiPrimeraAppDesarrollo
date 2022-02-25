@@ -39,66 +39,66 @@
 
 
 
-            <TextView
-                android:id="@+id/txtNombre"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/strParametroNombres"
-                android:textSize="18sp"/>
-
-            <EditText
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/editNombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/txtNombre"
-                android:inputType="text" />
+                android:hint="Nombres"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-            <TextView
-                android:id="@+id/txtApellidos"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/strParametroApellidos"
-                android:layout_below="@id/editNombre"
-                android:textSize="18sp"/>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"/>
 
-            <EditText
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/editApellidos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/txtApellidos"
-                android:inputType="text" />
+                android:hint="Apellidos"
+                android:layout_below="@id/editNombre"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
 
 
-            <TextView
-                android:id="@+id/txtDireccion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/strParametroDireccion"
-                android:layout_below="@id/editApellidos"
-                android:textSize="18sp"/>
-
-            <EditText
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/editDireccion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/txtDireccion"
-                android:inputType="text" />
+                android:hint="Direccion"
+                android:layout_below="@id/editApellidos"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"/>
 
-            <TextView
-                android:id="@+id/txtCiudad"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/strParametroCiudad"
-                android:layout_below="@id/editDireccion"
-                android:textSize="18sp"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/editCiudad"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/txtCiudad"
-                android:inputType="text" />
+                android:hint="Ciudad"
+                android:layout_below="@id/editDireccion"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
 
 
             <Button

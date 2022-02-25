@@ -13,9 +13,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.desarrollo.miprimeraapp.R;
 import com.desarrollo.miprimeraapp.databinding.EliminarClienteActivityBinding;
+import com.desarrollo.miprimeraapp.screenApp.crudClientes.activities.detalleCliente.DetalleClienteViewModel;
+import com.desarrollo.miprimeraapp.utilerias.ViewModelFactory;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,7 +36,8 @@ public class EliminarClienteActivity extends AppCompatActivity {
 
         binding = DataBindingUtil.setContentView(this, R.layout.eliminar_cliente_activity);
 
-        oEliminarClienteViewModel = new EliminarClienteViewModel(getApplicationContext());
+        ViewModelFactory clientesViewModelFactory = new ViewModelFactory(getApplicationContext());
+        oEliminarClienteViewModel = new ViewModelProvider(this, clientesViewModelFactory).get(EliminarClienteViewModel.class);
 
         initUI();
 
@@ -46,7 +50,7 @@ public class EliminarClienteActivity extends AppCompatActivity {
         if (extras != null){
             idCliente = extras.getLong("idCliente");
 
-            oEliminarClienteViewModel.detalleCliente(idCliente, getApplicationContext()).observe(this, new Observer<JSONObject>() {
+            oEliminarClienteViewModel.getResultDetalle().observe(this, new Observer<JSONObject>() {
                 @Override
                 public void onChanged(JSONObject result) {
 
@@ -57,10 +61,10 @@ public class EliminarClienteActivity extends AppCompatActivity {
                         if (result.getJSONObject("meta").getBoolean("isValid")){
                             JSONObject clienteWS = result.getJSONObject("data").getJSONObject("cliente");
 
-                            binding.editNombre.setText(clienteWS.getString(getResources().getString(R.string.strParametroWSNombre)));
-                            binding.editApellidos.setText(clienteWS.getString(getResources().getString(R.string.strParametroWSApellido)));
-                            binding.editDireccion.setText(clienteWS.getString(getResources().getString(R.string.strParametroWSDireccion)));
-                            binding.editCiudad.setText(clienteWS.getString(getResources().getString(R.string.strParametroWSCiudad)));
+                            binding.editNombre.getEditText().setText(clienteWS.getString(getResources().getString(R.string.strParametroWSNombre)));
+                            binding.editApellidos.getEditText().setText(clienteWS.getString(getResources().getString(R.string.strParametroWSApellido)));
+                            binding.editDireccion.getEditText().setText(clienteWS.getString(getResources().getString(R.string.strParametroWSDireccion)));
+                            binding.editCiudad.getEditText().setText(clienteWS.getString(getResources().getString(R.string.strParametroWSCiudad)));
 
                             binding.btnEliminar.setEnabled(true);
                         }else{
@@ -72,13 +76,15 @@ public class EliminarClienteActivity extends AppCompatActivity {
 
                 }
             });
+
+            oEliminarClienteViewModel.detalleCliente(idCliente,getApplicationContext());
         }
     }
 
     public void eliminarCliente(){
         binding.clienteEliminarProgress.setVisibility(View.VISIBLE);
 
-        oEliminarClienteViewModel.eliminarCliente(idCliente, getApplicationContext()).observe(this, new Observer<JSONObject>() {
+        oEliminarClienteViewModel.getResultEliminar().observe(this, new Observer<JSONObject>() {
             @Override
             public void onChanged(JSONObject result) {
                 try {
@@ -95,6 +101,8 @@ public class EliminarClienteActivity extends AppCompatActivity {
                 }
             }
         });
+
+        oEliminarClienteViewModel.eliminarCliente(idCliente, getApplicationContext());
     }
 
     public void initUI(){

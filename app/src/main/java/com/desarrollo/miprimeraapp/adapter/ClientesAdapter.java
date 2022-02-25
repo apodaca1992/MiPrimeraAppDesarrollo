@@ -45,6 +45,8 @@ public class ClientesAdapter extends RecyclerView.Adapter<ClientesAdapter.Client
     public void onBindViewHolder(@NonNull ClienteViewHolder holder, int position) {
         Clientes clientes = clientesList.get(position);
         holder.txtClienteName.setText(String.format("%s %s", clientes.getNombres(), clientes.getApellidos()));
+        holder.txtClienteDomicilio.setText(String.format("%s", clientes.getDireccion()));
+        holder.txtClienteCiudad.setText(String.format("%s", clientes.getCiudad()));
     }
 
     @Override
@@ -54,10 +56,14 @@ public class ClientesAdapter extends RecyclerView.Adapter<ClientesAdapter.Client
 
     public class ClienteViewHolder extends RecyclerView.ViewHolder{
         public TextView txtClienteName;
+        public TextView txtClienteDomicilio;
+        public TextView txtClienteCiudad;
 
         public ClienteViewHolder(View itemView, final ClientesAdapter.onItemClickListener listener){
             super(itemView);
             txtClienteName = itemView.findViewById(R.id.cliente_name);
+            txtClienteDomicilio = itemView.findViewById(R.id.cliente_domicilio);
+            txtClienteCiudad = itemView.findViewById(R.id.cliente_ciudad);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
