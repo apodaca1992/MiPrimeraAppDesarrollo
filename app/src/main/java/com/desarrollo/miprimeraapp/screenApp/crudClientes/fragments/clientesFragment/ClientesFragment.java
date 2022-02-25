@@ -1,6 +1,7 @@
 package com.desarrollo.miprimeraapp.screenApp.crudClientes.fragments.clientesFragment;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.PopupMenu;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.view.menu.MenuBuilder;
+import androidx.appcompat.view.menu.MenuPopupHelper;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -33,6 +35,7 @@ import com.desarrollo.miprimeraapp.screenApp.crudClientes.activities.eliminarCli
 import com.desarrollo.miprimeraapp.screenApp.crudClientes.activities.modificarCliente.ModificarClienteActivity;
 import com.desarrollo.miprimeraapp.utilerias.Urls;
 import com.desarrollo.miprimeraapp.utilerias.ViewModelFactory;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,45 +110,33 @@ public class ClientesFragment extends Fragment {
         adapter = new ClientesAdapter(getContext(), (ArrayList<Clientes>) oClientes);
         binding.rcvClientes.setAdapter(adapter);
         adapter.setItemClickListener((cliente, view) -> {
-            showPopup(cliente, view);
-        });
-    }
+            CharSequence[] opciones = {"Ver Detalle", "Modificar", "Eliminar"};
 
-    @SuppressLint("RestrictedApi")
-    public void showPopup(Clientes cliente, View v){
-        PopupMenu popup = new PopupMenu(requireContext(), v);
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.action_modificar:
-                        Intent intent = new Intent(getContext(), ModificarClienteActivity.class);
-                        intent.putExtra("idCliente", cliente.getId());
-                        startActivity(intent);
-                        return true;
-                    case R.id.action_eliminar:
-                        intent = new Intent(getContext(), EliminarClienteActivity.class);
-                        intent.putExtra("idCliente", cliente.getId());
-                        startActivity(intent);
-                        return true;
-                    case R.id.action_ver_detalle:
-                        intent = new Intent(getContext(), DetalleClienteActivity.class);
-                        intent.putExtra("idCliente", cliente.getId());
-                        startActivity(intent);
-                        return true;
-                    default:
-                        return false;
+            new MaterialAlertDialogBuilder(getContext())
+            .setTitle("Opciones - " + cliente.getNombres() + " " + cliente.getApellidos())
+            .setItems(opciones, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which){
+                        case 0:
+                            Intent intent = new Intent(getContext(), DetalleClienteActivity.class);
+                            intent.putExtra("idCliente", cliente.getId());
+                            startActivity(intent);
+                            break;
+                        case 1:
+                            intent = new Intent(getContext(), ModificarClienteActivity.class);
+                            intent.putExtra("idCliente", cliente.getId());
+                            startActivity(intent);
+                            break;
+                        case 2:
+                            intent = new Intent(getContext(), EliminarClienteActivity.class);
+                            intent.putExtra("idCliente", cliente.getId());
+                            startActivity(intent);
+                            break;
+                    }
                 }
-            }
+            })
+            .show();
         });
-
-        MenuInflater inflater = popup.getMenuInflater();
-        inflater.inflate(R.menu.menu_opciones_clientes, popup.getMenu());
-        Menu menu = popup.getMenu();
-        if (menu instanceof MenuBuilder){
-            MenuBuilder menuBuilder = (MenuBuilder) menu;
-            menuBuilder.setOptionalIconsVisible(true);
-        }
-        popup.show();
     }
 }
